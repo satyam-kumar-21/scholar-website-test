@@ -10,11 +10,14 @@ import Contact from './components/contact/Contact';
 import ScholarForm from './components/ScholarForm/ScholarForm';
 import Inquiry from './components/admission_inquiry/Inquiry';
 import Login from './components/Student_Login/Login';
+import ScrollToTop from './components/ScrollToTop';
+import Signup from './components/Signup/Signup';
 
 const App = () => {
     return (
         <Router>
             <Header />
+            <ScrollToTop/>
             <Routes>
                 {/* Route for Home page */}
                 <Route path="/" element={<Home />} />
@@ -37,7 +40,8 @@ const App = () => {
                 <Route path="/apply-scholar-program" element={<ScholarForm />} />
                 <Route path="/admission-inquiry" element={<Inquiry />} />
 
-                <Route path="/student-login" element={<Login />} />
+                <Route path="/create-account" element={<Signup />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </Router>
     );

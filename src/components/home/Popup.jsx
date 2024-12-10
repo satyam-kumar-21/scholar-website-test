@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Popup() {
   const [isOpen, setIsOpen] = useState(false); // Initially not open
@@ -29,7 +30,7 @@ function Popup() {
 
   // Function for Apply Now button
   const applyNow = () => {
-    alert('Redirecting to Apply Now!');
+    alert('Redirecting to Scholarship Application!');
     closePopup(); // Close popup after Apply Now click
   };
 
@@ -40,17 +41,18 @@ function Popup() {
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-gradient-to-tl from-indigo-700 to-purple-500 p-8 rounded-lg shadow-2xl w-11/12 sm:w-96 max-w-lg text-white">
             <h2 className="text-3xl font-extrabold mb-4 text-center">
-              Join Our Community!
+              Apply for a Scholarship Today!
             </h2>
             <p className="mb-6 text-center text-lg">
-              We are excited to have you with us. Click below to apply and get started with us today!
+              We are offering a limited number of scholarships to help you achieve your academic goals. Click below to apply and secure your chance!
             </p>
             <div className="flex justify-center gap-4">
               <button
-                onClick={applyNow}
+               
                 className="px-6 py-3 bg-gradient-to-r from-blue-500 to-teal-400 text-white rounded-lg shadow-md hover:scale-105 transition duration-200"
               >
-                Apply Now
+                <Link  to="/apply-scholar-program">Apply Now</Link>
+                
               </button>
               <button
                 onClick={closePopup}

@@ -39,7 +39,7 @@ const TopHeader = () => {
 
           {/* Student Login Link */}
           <Link
-            to="student-login"
+            to="login"
             className="text-white hover:text-gray-300 transition-all duration-300 py-1 px-3 rounded-full bg-gradient-to-r from-red-500 to-yellow-500 animate-pulse"
           >
             Student Login
