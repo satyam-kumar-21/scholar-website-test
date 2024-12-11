@@ -4,7 +4,6 @@ import Header from './components/Header/Header';
 import Home from './components/home/Home';
 import About from './components/about/About';
 import Courses from './components/Courses/Courses';
-import Colleges from './components/Colleges/Colleges';
 import Infrstructure from './components/infrastructures/Infrstructure';
 import Contact from './components/contact/Contact';
 import ScholarForm from './components/ScholarForm/ScholarForm';
@@ -12,6 +11,7 @@ import Inquiry from './components/admission_inquiry/Inquiry';
 import Login from './components/Student_Login/Login';
 import ScrollToTop from './components/ScrollToTop';
 import Signup from './components/Signup/Signup';
+import Scholar from './components/scholar/Scholar';
 
 const App = () => {
     return (
@@ -29,7 +29,7 @@ const App = () => {
                 <Route path="/courses" element={<Courses />} />
                 
                 {/* Route for Colleges page */}
-                <Route path="/colleges" element={<Colleges />} />
+                <Route path="/scholar-info" element={<Scholar />} />
                 
                 {/* Route for Infrastructure page */}
                 <Route path="/infrastructure" element={<Infrstructure />} />

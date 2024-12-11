@@ -11,7 +11,7 @@ const BottomHeader = () => {
     return (
         <div className="bg-[#2C3E50] text-[#BDC3C7] shadow-md">
             <div className="max-w-screen-xl mx-auto px-6 py-4 flex justify-between items-center">
-                
+
                 {/* Logo */}
                 <div className="flex items-center space-x-4">
                     <img src="logo.png" alt="College Logo" className="w-12 h-12" />
@@ -20,37 +20,31 @@ const BottomHeader = () => {
                 {/* Right Section: Main Navigation Links */}
                 <nav className="hidden md:flex space-x-8">
 
-                <Link to="/" className="font-bold text-[#BDC3C7] hover:text-[#F39C12] transition duration-200">
+                    <Link to="/" className="font-bold text-[#BDC3C7] hover:text-[#F39C12] transition duration-200">
                         Home
                     </Link>
-                    {/* Regular Link for About Us */}
                     <Link to="/about" className="font-bold text-[#BDC3C7] hover:text-[#F39C12] transition duration-200">
                         About Us
                     </Link>
-
-                    {/* Regular Link for Courses We Provide */}
                     <Link to="/courses" className="font-bold text-[#BDC3C7] hover:text-[#F39C12] transition duration-200">
                         Courses We Provide
                     </Link>
-
-                    {/* Regular Link for Colleges We Provide */}
-                    <Link to="/colleges" className="font-bold text-[#BDC3C7] hover:text-[#F39C12] transition duration-200">
-                        Colleges We Provide
-                    </Link>
-
-                    {/* Regular Link for Infrastructure */}
                     <Link to="/infrastructure" className="font-bold text-[#BDC3C7] hover:text-[#F39C12] transition duration-200">
                         Infrastructure
                     </Link>
-
-                    {/* Regular Link for Placement */}
                     <Link to="/placement" className="font-bold text-[#BDC3C7] hover:text-[#F39C12] transition duration-200">
                         Placement
                     </Link>
-
-                    {/* Regular Link for Contact Us */}
                     <Link to="/contact" className="font-bold text-[#BDC3C7] hover:text-[#F39C12] transition duration-200">
                         Contact Us
+                    </Link>
+
+                    {/* Highlighted Scholar Info Link */}
+                    <Link
+                        to="/scholar-info"
+                        className="font-bold text-white bg-[#FF6347] hover:bg-[#FF4500] py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105"
+                    >
+                        Scholar Info
                     </Link>
                 </nav>
 
@@ -69,13 +63,13 @@ const BottomHeader = () => {
                 <div className="lg:hidden bg-[#2C3E50] text-[#BDC3C7] shadow-md">
                     <ul className="flex flex-col space-y-4 px-6 py-4">
                         <li>
+                            <Link to="/" className="font-bold text-[#BDC3C7] hover:text-[#F39C12]">Home</Link>
+                        </li>
+                        <li>
                             <Link to="/about" className="font-bold text-[#BDC3C7] hover:text-[#F39C12]">About Us</Link>
                         </li>
                         <li>
                             <Link to="/courses" className="font-bold text-[#BDC3C7] hover:text-[#F39C12]">Courses We Provide</Link>
-                        </li>
-                        <li>
-                            <Link to="/colleges" className="font-bold text-[#BDC3C7] hover:text-[#F39C12]">Colleges We Provide</Link>
                         </li>
                         <li>
                             <Link to="/infrastructure" className="font-bold text-[#BDC3C7] hover:text-[#F39C12]">Infrastructure</Link>
@@ -85,6 +79,15 @@ const BottomHeader = () => {
                         </li>
                         <li>
                             <Link to="/contact" className="font-bold text-[#BDC3C7] hover:text-[#F39C12]">Contact Us</Link>
+                        </li>
+                        {/* Highlighted Scholar Info in Mobile Menu */}
+                        <li>
+                            <Link
+                                to="/scholar-info"
+                                className="font-bold text-white bg-[#FF6347] hover:bg-[#FF4500] py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105"
+                            >
+                                Scholar Info
+                            </Link>
                         </li>
                     </ul>
                 </div>
