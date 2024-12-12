@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { Link } from 'react-router-dom'; // Import Link to handle routing
+import { useDispatch } from 'react-redux'; // For Redux integration
+import { loginStart, loginSuccess, loginFailure } from '../../redux/authSlice'; // Correct Redux action imports
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -8,6 +10,7 @@ function Login() {
   const [captcha, setCaptcha] = useState('');
   const [captchaCode, setCaptchaCode] = useState(generateCaptcha());
   const [errorMessage, setErrorMessage] = useState('');
+  const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize useNavigate
 
   // Generate a random captcha code
@@ -21,7 +24,7 @@ function Login() {
   }
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (captcha !== captchaCode) {
       setErrorMessage('Captcha is incorrect');
@@ -33,9 +36,32 @@ function Login() {
       return;
     }
 
-    // Simulate login process
-    setErrorMessage('');
-    navigate('/dashboard'); // Redirect to the dashboard on successful login
+    // Dispatch the loginStart action
+    dispatch(loginStart());
+
+    try {
+      // Make the API call to log the user in
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Dispatch loginSuccess with user data
+        dispatch(loginSuccess(data));
+        navigate('/dashboard'); // Redirect to dashboard after successful login
+      } else {
+        // Dispatch loginFailure in case of an error
+        dispatch(loginFailure(data.message));
+        setErrorMessage(data.message);
+      }
+    } catch (err) {
+      dispatch(loginFailure('Server error, please try again.'));
+      setErrorMessage('Server error, please try again.');
+    }
   };
 
   // Handle Google Login
@@ -82,7 +108,7 @@ function Login() {
 
           {/* Forgot Password Link */}
           <div className="text-sm text-blue-600 hover:underline text-right">
-            <a href="/forgot-password">Forgot Password?</a>
+            <Link to="/forgot-password">Forgot Password?</Link>
           </div>
 
           <div>
