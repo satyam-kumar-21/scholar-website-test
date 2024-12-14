@@ -1,25 +1,25 @@
-// src/redux/authActions.js
 import axios from 'axios';
 import { 
-  registerStart, 
-  registerSuccess, 
-  registerFailure, 
+  signupStart,  // Correct this import
+  signupSuccess, 
+  registerFailure,  // Same here, this should match the action names in authSlice
   loginStart, 
   loginSuccess, 
-  loginFailure 
+  loginFailure,
+  updateProfileSuccess,
 } from './authSlice';
 
-// Backend base URL (make sure it matches your backend server)
 const BASE_URL = 'http://localhost:5000/api/auth'; // Adjust this URL according to your backend
 
 // Register Action
 export const registerUser = (userData) => async (dispatch) => {
-  dispatch(registerStart());
+  dispatch(signupStart()); // Use signupStart here
   try {
     const res = await axios.post(`${BASE_URL}/register`, userData);
-    dispatch(registerSuccess({ user: res.data.user, token: res.data.token }));
+    dispatch(signupSuccess({ user: res.data.user, token: res.data.token }));
   } catch (err) {
-    dispatch(registerFailure(err.response.data.message));
+    const errorMessage = err.response?.data?.message || 'An error occurred. Please try again.';
+    dispatch(registerFailure(errorMessage));
   }
 };
 
@@ -30,6 +30,22 @@ export const loginUser = (credentials) => async (dispatch) => {
     const res = await axios.post(`${BASE_URL}/login`, credentials);
     dispatch(loginSuccess({ user: res.data.user, token: res.data.token }));
   } catch (err) {
-    dispatch(loginFailure(err.response.data.message));
+    const errorMessage = err.response?.data?.message || 'An error occurred. Please try again.';
+    dispatch(loginFailure(errorMessage));
+  }
+};
+
+// Profile Update Action
+export const updateProfile = (userData) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('token');
+    const res = await axios.put(`${BASE_URL}/edit-profile`, userData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(updateProfileSuccess(res.data.user)); // Assuming this action updates the user in the Redux store
+  } catch (err) {
+    dispatch(updateProfileFailure(err.response?.data?.message || 'Error updating profile'));
   }
 };

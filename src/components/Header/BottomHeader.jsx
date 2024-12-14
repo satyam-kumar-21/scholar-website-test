@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from "../../../src/assets/important/jsrlogo.png"
 
 const BottomHeader = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,7 +15,7 @@ const BottomHeader = () => {
 
                 {/* Logo */}
                 <div className="flex items-center space-x-4">
-                    <img src="logo.png" alt="College Logo" className="w-12 h-12" />
+                    <img src={logo} alt="College Logo" className="w-12 h-12" />
                 </div>
 
                 {/* Right Section: Main Navigation Links */}
@@ -40,12 +41,12 @@ const BottomHeader = () => {
                     </Link>
 
                     {/* Highlighted Scholar Info Link */}
-                    <Link
+                    {/* <Link
                         to="/scholar-info"
                         className="font-bold text-white bg-[#FF6347] hover:bg-[#FF4500] py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105"
                     >
                         Scholar Info
-                    </Link>
+                    </Link> */}
                 </nav>
 
                 {/* Mobile Hamburger Menu */}
@@ -81,14 +82,14 @@ const BottomHeader = () => {
                             <Link to="/contact" className="font-bold text-[#BDC3C7] hover:text-[#F39C12]">Contact Us</Link>
                         </li>
                         {/* Highlighted Scholar Info in Mobile Menu */}
-                        <li>
+                        {/* <li>
                             <Link
                                 to="/scholar-info"
                                 className="font-bold text-white bg-[#FF6347] hover:bg-[#FF4500] py-2 px-6 rounded-lg transition duration-300 transform hover:scale-105"
                             >
                                 Scholar Info
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             )}

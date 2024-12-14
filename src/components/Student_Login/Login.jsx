@@ -1,168 +1,150 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import { Link } from 'react-router-dom'; // Import Link to handle routing
-import { useDispatch } from 'react-redux'; // For Redux integration
-import { loginStart, loginSuccess, loginFailure } from '../../redux/authSlice'; // Correct Redux action imports
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../../redux/authActions';
+import { FaGoogle, FaSyncAlt } from 'react-icons/fa'; // Google and refresh icons
 
 function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [captcha, setCaptcha] = useState('');
-  const [captchaCode, setCaptchaCode] = useState(generateCaptcha());
-  const [errorMessage, setErrorMessage] = useState('');
-  const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [captcha, setCaptcha] = useState(''); // Store CAPTCHA value
+  const [userCaptchaInput, setUserCaptchaInput] = useState(''); // Store user input for CAPTCHA
+  const [error, setError] = useState('');
+  const user = useSelector((state) => state.auth.user); // Get user data from Redux store
 
-  // Generate a random captcha code
-  function generateCaptcha() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let captchaStr = '';
+  // Check if user is already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard'); // If already logged in, redirect to dashboard
+    }
+  }, [user, navigate]);
+
+  // Function to generate CAPTCHA code
+  const generateCaptcha = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let captchaCode = '';
     for (let i = 0; i < 6; i++) {
-      captchaStr += chars.charAt(Math.floor(Math.random() * chars.length));
+      captchaCode += characters.charAt(Math.floor(Math.random() * characters.length));
     }
-    return captchaStr;
-  }
+    setCaptcha(captchaCode); // Set the generated CAPTCHA code
+  };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    generateCaptcha(); // Generate CAPTCHA code on component mount
+  }, []);
+
+  const handleLogin = (e) => {
     e.preventDefault();
-    if (captcha !== captchaCode) {
-      setErrorMessage('Captcha is incorrect');
+
+    if (userCaptchaInput !== captcha) {
+      setError('Invalid CAPTCHA. Please try again.');
       return;
     }
 
-    if (!email || !password) {
-      setErrorMessage('Please fill in both fields');
-      return;
-    }
+    const userData = { email, password };
+    dispatch(loginUser(userData)); // Dispatch the login action
 
-    // Dispatch the loginStart action
-    dispatch(loginStart());
-
-    try {
-      // Make the API call to log the user in
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Dispatch loginSuccess with user data
-        dispatch(loginSuccess(data));
-        navigate('/dashboard'); // Redirect to dashboard after successful login
-      } else {
-        // Dispatch loginFailure in case of an error
-        dispatch(loginFailure(data.message));
-        setErrorMessage(data.message);
-      }
-    } catch (err) {
-      dispatch(loginFailure('Server error, please try again.'));
-      setErrorMessage('Server error, please try again.');
+    // Redirect to dashboard after successful login
+    // Assuming that loginUser will update the user state upon success
+    if (user) {
+      navigate('/dashboard');
     }
   };
 
-  // Handle Google Login
-  const handleGoogleLogin = () => {
-    // Simulate Google login
-    alert('Logging in with Google...');
-    navigate('/dashboard'); // Redirect after successful Google login
+  // CAPTCHA refresh handler
+  const handleRefreshCaptcha = () => {
+    generateCaptcha(); // Regenerate the CAPTCHA code
+    setUserCaptchaInput(''); // Reset user input for CAPTCHA
+    setError(''); // Clear any existing error
   };
 
   return (
-    <div className="flex justify-center items-center px-2 py-2 bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-96">
-        <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+    <div className=" bg-gray-100 flex justify-center items-center p-2 md:p-8">
+      <div className="bg-white shadow-md rounded-lg p-6 w-full sm:w-1/3">
+        <h2 className="text-2xl text-center font-semibold mb-4">Login</h2>
 
-        {/* Error Message */}
-        {errorMessage && <p className="text-red-500 text-center mb-4">{errorMessage}</p>}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium">Email</label>
+        <form onSubmit={handleLogin}>
+          {/* Email Input */}
+          <div className="space-y-4 mb-4">
+            <label htmlFor="email" className="text-xl font-medium">Email</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-              placeholder="Enter your email"
-              required
+              className="w-full px-4 py-2 mt-2 border rounded-md"
+              autoFocus
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium">Password</label>
+          {/* Password Input */}
+          <div className="space-y-4 mb-4">
+            <label htmlFor="password" className="text-xl font-medium">Password</label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-              placeholder="Enter your password"
-              required
+              className="w-full px-4 py-2 mt-2 border rounded-md"
             />
           </div>
 
-          {/* Forgot Password Link */}
-          <div className="text-sm text-blue-600 hover:underline text-right">
-            <Link to="/forgot-password">Forgot Password?</Link>
-          </div>
-
-          <div>
-            <label htmlFor="captcha" className="block text-sm font-medium">Captcha</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                id="captcha"
-                value={captcha}
-                onChange={(e) => setCaptcha(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                placeholder="Enter the captcha"
-                required
-              />
-              <span className="bg-gray-200 px-4 py-2 rounded-lg">{captchaCode}</span>
+          {/* CAPTCHA Display */}
+          <div className="mb-4">
+            <label htmlFor="captcha" className="text-xl font-medium">Enter CAPTCHA</label>
+            <div className="flex items-center space-x-2 mt-2">
+              <div className="bg-gray-200 p-2 rounded-md font-semibold">{captcha}</div>
+              <button
+                type="button"
+                onClick={handleRefreshCaptcha}
+                className="ml-2 text-blue-600 hover:text-blue-700"
+              >
+                <FaSyncAlt className="inline-block text-lg" /> Refresh
+              </button>
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
-          >
+          {/* User CAPTCHA Input */}
+          <div className="mb-4">
+            <input
+              type="text"
+              id="userCaptcha"
+              value={userCaptchaInput}
+              onChange={(e) => setUserCaptchaInput(e.target.value)}
+              className="w-full px-4 py-2 mt-2 border rounded-md"
+              placeholder="Enter CAPTCHA"
+            />
+          </div>
+
+          {/* Error Message for CAPTCHA */}
+          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+
+          {/* Login Button */}
+          <button type="submit" className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
             Login
           </button>
         </form>
 
-        <div className="flex items-center justify-center mt-4">
-          <span className="text-sm text-gray-600">Or</span>
-        </div>
-
         {/* Google Login Button */}
-        <button
-          onClick={handleGoogleLogin}
-          className="w-full mt-4 px-4 py-2 bg-red-600 text-white rounded-lg flex items-center justify-center hover:bg-red-700 transition duration-200"
-        >
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-            alt="Google logo"
-            className="w-6 h-6 mr-2" // Adjust size of the logo
-          />
-          <span>Login with Google</span>
-        </button>
+        {/* <div className="flex items-center justify-center mt-4">
+          <button className="justify-center text-center flex items-center space-x-2 bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 w-full">
+            <FaGoogle className="text-xl text-center" />
+            <span className='text-center'>Login with Google</span>
+          </button>
+        </div> */}
 
-        {/* Create Account Link */}
-        <div className="text-center mt-4">
-          <p className="text-sm text-gray-600">
-            Don't have an account?  
-            <Link
-              to="/create-account"
-              className="text-blue-600 hover:underline"
-            >
-               Create one
-            </Link>
-          </p>
+        {/* Create Account Button */}
+        <div className="mt-4 text-center">
+          <span>Don't have an account? </span>
+          <button
+            onClick={() => navigate('/signup')} // Navigate to the signup page
+            className="text-blue-600 hover:text-blue-700 font-semibold"
+          >
+            Create Account
+          </button>
         </div>
       </div>
     </div>

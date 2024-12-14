@@ -2,9 +2,21 @@ import React, { useState, useEffect } from 'react';
 
 function Hero() {
   const images = [
-    'https://plus.unsplash.com/premium_photo-1680807988328-7ba28ad24d9f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGNvbGxlZ2V8ZW58MHx8MHx8fDA%3D',
-    'https://media.istockphoto.com/id/2163913008/photo/group-of-four-indian-asian-young-college-friends-with-backpack-books-laptop-standing-isolated.webp?a=1&b=1&s=612x612&w=0&k=20&c=5LqAEwqn5Lh0hxLSQT3e0IoJaIhIhT4QZYI98_vYk8c=',
-    'https://media.istockphoto.com/id/1461634216/photo/cheerful-group-of-graduated-students-jumping-at-college-campus-after-completion-of-degree.webp?a=1&b=1&s=612x612&w=0&k=20&c=95RoUv9tzSpcxBCKamVUdER6bSB41SyKka1aw4_95Vw=',
+    {
+      src: 'https://media.ahmedabadmirror.com/am/uploads/mediaGallery/image/1646056639226.jpg-org',
+      alt: 'University Campus',
+      text: 'Welcome to JSR Bhopal, A Leading Institute in Nursing, Pharmacy, and Medical Education'
+    },
+    {
+      src: 'https://th-i.thgim.com/public/incoming/6jfpqu/article68127794.ece/alternates/LANDSCAPE_1200/IMG_Medical_students__CO_2_1_HVCO8SCR.jpg',
+      alt: 'College Friends',
+      text: 'Join the JSR Bhopal Family and Build Your Future in the Medical and Health Sciences Field'
+    },
+    {
+      src: 'https://images.hindustantimes.com/img/2022/03/01/550x309/810f9178-991f-11ec-82cf-231c0ab4e0db_1646112217565.jpeg',
+      alt: 'Graduation Celebration',
+      text: 'Empowering Future Healthcare Leaders. Graduate with Excellence at JSR Bhopal!'
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -26,21 +38,28 @@ function Hero() {
   }, []); // Empty dependency array means this effect runs only once when the component mounts
 
   return (
-    <div className="relative w-full h-[50vh] overflow-hidden">
+    <div className="relative w-[100vw] h-[25vh] md:w-[100vw] md:h-[80vh] overflow-hidden">
       <div
         className="flex transition-transform duration-500"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {images.map((src, index) => (
-          <div key={index} className="w-full h-full flex-shrink-0">
+        {images.map((image, index) => (
+          <div key={index} className="w-full h-full flex-shrink-0 relative">
             <img
-              src={src}
-              alt={`Image ${index + 1}`}
-              className="w-full h-full object-cover"
+              src={image.src}
+              alt={image.alt}
+              className="h-full w-full object-cover"
             />
+            {/* Blue Background Overlay with low opacity for improved text visibility */}
+            <div className="absolute top-0 left-0 w-full h-full bg-blue-600 opacity-20" />
+            {/* Text Overlay */}
+            <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg sm:text-3xl md:text-4xl font-bold bg-black bg-opacity-50 p-4 sm:p-6 rounded-md shadow-xl w-[85%] sm:w-[70%] text-center">
+              {image.text}
+            </div>
           </div>
         ))}
       </div>
+
       {/* Left Arrow */}
       <button
         className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black text-white p-2 rounded-full opacity-50 hover:opacity-100"
@@ -48,6 +67,7 @@ function Hero() {
       >
         &#60;
       </button>
+
       {/* Right Arrow */}
       <button
         className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black text-white p-2 rounded-full opacity-50 hover:opacity-100"
@@ -60,4 +80,3 @@ function Hero() {
 }
 
 export default Hero;
-
