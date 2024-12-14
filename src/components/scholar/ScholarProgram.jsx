@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaPhoneAlt, FaWhatsapp } from 'react-icons/fa'; // Importing icons for call and WhatsApp
+import Testimonials from './Testimonials';
 
 function ScholarProgram() {
   const successStories = [
@@ -28,26 +29,32 @@ function ScholarProgram() {
   ];
 
   return (
-    <div className="bg-gray-50 py-10 sm:py-16 md:py-20">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8">
+    <div className="font-sans bg-white text-gray-900 ">
+      <div className="">
 
-        {/* Hero Section */}
-        <section className="text-center mb-8 sm:mb-12">
-          <h2 className="text-xl sm:text-4xl font-extrabold text-gray-800 mb-4">
-            Your Path to Success Starts Here
-          </h2>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-6">
-            Apply for the Scholar Program today and take the first step towards an incredible academic journey, complete with financial support and career opportunities.
-          </p>
-          <Link to="/apply-scholar-program" className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-lg py-3 px-6 rounded-lg shadow-lg hover:scale-105 transition transform duration-200">
-            Apply Now
-          </Link>
-        </section>
+
+      <section className="py-20 px-4 md:px-16 bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 text-center text-white">
+  <h1 className="text-4xl sm:text-5xl font-extrabold mb-6">
+    Your Path to Success Starts Here
+  </h1>
+  <p className="mt-4 pb-10 text-lg sm:text-xl md:text-2xl max-w-4xl mx-auto">
+    Apply for the Scholar Program today and take the first step towards an incredible academic journey, complete with financial support and career opportunities.
+  </p>
+  <Link to="/apply-scholar-program" className="bg-gradient-to-r from-purple-700 via-indigo-600 to-blue-500 text-white text-lg py-3 px-6 rounded-lg shadow-lg hover:scale-105 transition transform duration-200">
+    Apply Now
+  </Link>
+</section>
+
+
+
+
+
+
 
         {/* Who Can Apply Section */}
         <section className="bg-gray-100 py-12 sm:py-16 mb-12">
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-lg sm:text-3xl font-extrabold text-gray-800 mb-4">
+            <h2 className="text-lg sm:text-3xl font-extrabold text-indigo-600 mb-4">
               Who Can Apply for the Scholar Program?
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -65,7 +72,7 @@ function ScholarProgram() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Indian Citizens</h3>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">Indian Citizens</h3>
               <p className="text-lg text-gray-600">
                 Only Indian citizens who are pursuing their undergraduate or postgraduate degrees are eligible to apply.
               </p>
@@ -79,7 +86,7 @@ function ScholarProgram() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Aspire for Higher Education</h3>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">Aspire for Higher Education</h3>
               <p className="text-lg text-gray-600">
                 Applicants should have completed their schooling or undergraduate education and aspire to pursue higher education.
               </p>
@@ -93,7 +100,7 @@ function ScholarProgram() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Financially Underprivileged Background</h3>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">Financially Underprivileged Background</h3>
               <p className="text-lg text-gray-600">
                 Students from families with limited financial resources who wish to continue their education are encouraged to apply.
               </p>
@@ -104,25 +111,25 @@ function ScholarProgram() {
 
 
         {/* What We Offer Section */}
-        <section className="mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-center text-gray-800 mb-6">
+        <section className="py-20 px-4 md:px-16 bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 text-center text-white">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-white mb-6">
             What We Offer
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Full Tuition Coverage</h3>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">Full Tuition Coverage</h3>
               <p className="text-gray-600">
                 Receive full or partial funding for your tuition fees, helping you focus on what matters most – your education.
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Mentorship & Guidance</h3>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">Mentorship & Guidance</h3>
               <p className="text-gray-600">
                 Get personalized mentorship from professors and industry experts, guiding you to success in your chosen career path.
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Career Development</h3>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">Career Development</h3>
               <p className="text-gray-600">
                 Take advantage of internships, job placement programs, and networking opportunities to fast-track your career.
               </p>
@@ -133,7 +140,7 @@ function ScholarProgram() {
         {/* How It Works Section */}
         <section className="bg-gray-100 py-10 sm:py-12">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-6">
+            <h2 className="text-2xl sm:text-3xl font-semibold text-indigo-600 mb-6">
               How the Program Works
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-6">
@@ -159,49 +166,36 @@ function ScholarProgram() {
           </div>
         </section>
 
-        {/* Success Stories */}
-        <section className="mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-center text-gray-800 mb-6">
-            Success Stories
-          </h2>
-          <div className="flex overflow-x-auto gap-6 sm:gap-8 pb-8">
-            {successStories.map((story, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-lg w-72 sm:w-96">
-                <img src={story.image} alt={story.name} className="w-full h-48 object-cover rounded-t-lg mb-4" />
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">{story.name}</h3>
-                <p className="text-gray-600 mb-2">{story.story}</p>
-                <p className="text-sm text-gray-500">Graduation Year: {story.graduationYear}</p>
-                <p className="text-sm text-gray-500">Major: {story.major}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+      
+      <Testimonials />
+
+
 
         {/* Core Values Section */}
-        <section className="bg-gray-100 py-10 sm:py-12 md:py-16">
+        <section className="bg-gray-100 py-10 sm:py-12 md:py-16 bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 text-center text-white">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold  mb-6">
               Our Core Values
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-6">
+            <p className="text-lg sm:text-xl  max-w-3xl mx-auto mb-6">
               At the heart of our Scholar Program are values that guide every student’s journey to success.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mx-5 md:mx-10 gap-6 sm:gap-8">
             <div className="text-center p-6 bg-white rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Empowerment</h3>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">Empowerment</h3>
               <p className="text-lg text-gray-600">
                 We empower students by providing the necessary resources, opportunities, and guidance to help them succeed.
               </p>
             </div>
             <div className="text-center p-6 bg-white rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Integrity</h3>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">Integrity</h3>
               <p className="text-lg text-gray-600">
                 Our program is built on trust, transparency, and honesty, ensuring that every student is treated with the utmost respect.
               </p>
             </div>
             <div className="text-center p-6 bg-white rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Excellence</h3>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">Excellence</h3>
               <p className="text-lg text-gray-600">
                 We uphold the highest standards in everything we do—from education to student support, aiming for excellence in all aspects.
               </p>
