@@ -4,8 +4,18 @@ import { createSlice } from '@reduxjs/toolkit';
 const savedToken = localStorage.getItem('token');
 const savedUser = localStorage.getItem('user');
 
+// Ensure the savedUser is a valid JSON string or null
+let parsedUser = null;
+if (savedUser) {
+  try {
+    parsedUser = JSON.parse(savedUser);
+  } catch (error) {
+    console.error('Error parsing user data from localStorage:', error);
+  }
+}
+
 const initialState = {
-  user: savedUser ? JSON.parse(savedUser) : null, // Retrieve and parse user data from localStorage
+  user: parsedUser, // Safely parse the user data
   token: savedToken || null, // Retrieve token from localStorage
   error: null,
   loading: false,
@@ -14,8 +24,13 @@ const initialState = {
 // JWT expiration check function
 const isTokenValid = (token) => {
   if (!token) return false;
-  const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode the JWT
-  return decodedToken.exp * 1000 > Date.now(); // Compare expiration with current time
+  try {
+    const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode the JWT
+    return decodedToken.exp * 1000 > Date.now(); // Compare expiration with current time
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return false;
+  }
 };
 
 const authSlice = createSlice({
@@ -76,16 +91,15 @@ const authSlice = createSlice({
 });
 
 export const {
-  signupStart,  // This is the action that should be used for registering
+  signupStart,
   signupSuccess,
   registerFailure,
   loginStart,
   loginSuccess,
   loginFailure,
   logout,
-  updateProfileSuccess, 
+  updateProfileSuccess,
   updateProfileFailure
 } = authSlice.actions;
-
 
 export default authSlice.reducer;

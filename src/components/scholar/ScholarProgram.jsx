@@ -40,7 +40,7 @@ function ScholarProgram() {
   <p className="mt-4 pb-10 text-lg sm:text-xl md:text-2xl max-w-4xl mx-auto">
     Apply for the Scholar Program today and take the first step towards an incredible academic journey, complete with financial support and career opportunities.
   </p>
-  <Link to="/apply-scholar-program" className="bg-gradient-to-r from-purple-700 via-indigo-600 to-blue-500 text-white text-lg py-3 px-6 rounded-lg shadow-lg hover:scale-105 transition transform duration-200">
+  <Link to="/apply-scholar-program" className="bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg text-lg font-semibold hover:bg-yellow-600 transition">
     Apply Now
   </Link>
 </section>
@@ -222,11 +222,7 @@ function ScholarProgram() {
         </section>
 
         {/* Final Call to Action */}
-        <div className="text-center mt-8 sm:mt-12">
-          <Link to="/apply-scholar-program" className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white text-lg py-3 px-6 rounded-lg shadow-lg hover:scale-105 transition transform duration-200">
-            Apply Now
-          </Link>
-        </div>
+       
       </div>
     </div>
   );

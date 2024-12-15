@@ -16,6 +16,7 @@ import StudentDashboard from './components/studentDashboard/StudentDashboard';
 import EditProfile from './components/studentDashboard/EditProfile';
 import PrivateRoute from './components/PrivateRoute'; // Import the PrivateRoute component
 import Footer from './components/footer/Footer';
+import Placement from './components/placement/Placement';
 
 const App = () => {
   return (
@@ -34,6 +35,8 @@ const App = () => {
 
         {/* Route for Scholar page */}
         <Route path="/scholar-info" element={<Scholar />} />
+
+        <Route path="/placement" element={<Placement />} />
 
         {/* Route for Infrastructure page */}
         <Route path="/infrastructure" element={<Infrstructure />} />
