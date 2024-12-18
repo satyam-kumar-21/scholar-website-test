@@ -9,9 +9,9 @@ import {
   updateProfileSuccess,
 } from './authSlice';
 
-// const BASE_URL = 'http://localhost:5000/api/auth'; // local
+const BASE_URL = 'http://localhost:5000/api/auth'; // local
 
-const BASE_URL = 'https://scholarship-backend-orpin.vercel.app/api/auth'; //production 
+// const BASE_URL = 'https://scholarship-backend-orpin.vercel.app/api/auth'; //production 
 // Register Action
 export const registerUser = (userData) => async (dispatch) => {
   dispatch(signupStart()); // Use signupStart here

@@ -34,9 +34,9 @@ function Signup() {
     try {
       dispatch(signupStart());
 
-      // const apicheck  = 'http://localhost:5000/api/auth/register' //local
+      const apicheck  = 'http://localhost:5000/api/auth/register' //local
 
-      const apicheck = 'https://scholarship-backend-orpin.vercel.app/api/auth/register'
+      // const apicheck = 'https://scholarship-backend-orpin.vercel.app/api/auth/register'
       // Replace this with the actual API call
       const response = await fetch(apicheck , {
         method: 'POST',

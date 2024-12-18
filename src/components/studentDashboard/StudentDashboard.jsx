@@ -18,32 +18,32 @@ function StudentDashboard() {
     <div className="min-h-screen bg-gray-100 flex flex-col sm:flex-row">
       {/* Sidebar */}
       <div className="w-full sm:w-1/4 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-800 text-white p-6 sm:h-auto sm:flex sm:flex-col">
-  <div className="text-center mb-8">
-    <div className="rounded-full bg-gray-500 text-white w-32 h-32 mx-auto mb-4 flex items-center justify-center">
-      <span className="text-4xl font-bold">
-        {name ? name.split(' ').map((name) => name[0]).join('') : 'U'}
-      </span>
-    </div>
-    <h2 className="text-xl font-semibold">{name}</h2>
-    <p className="text-sm text-gray-300">{email}</p>
-  </div>
-  <nav>
-    <ul className="space-y-4">
-      <li>
-        <Link to="/dashboard" className="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded-md transition duration-200">
-          <FaCog className="text-lg" /> {/* Settings Icon */}
-          <span>Settings</span>
-        </Link>
-      </li>
-      <li>
-        <button onClick={handleLogout} className="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded-md transition duration-200">
-          <FaSignOutAlt className="text-lg" /> {/* Logout Icon */}
-          <span><Link to="/login">Logout</Link></span>
-        </button>
-      </li>
-    </ul>
-  </nav>
-</div>
+        <div className="text-center mb-8">
+          <div className="rounded-full bg-gray-500 text-white w-32 h-32 mx-auto mb-4 flex items-center justify-center">
+            <span className="text-4xl font-bold">
+              {name ? name.split(' ').map((name) => name[0]).join('') : 'U'}
+            </span>
+          </div>
+          <h2 className="text-xl font-semibold">{name}</h2>
+          <p className="text-sm text-gray-300">{email}</p>
+        </div>
+        <nav>
+          <ul className="space-y-4">
+            <li>
+              <Link to="/dashboard" className="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded-md transition duration-200">
+                <FaCog className="text-lg" /> {/* Settings Icon */}
+                <span>Settings</span>
+              </Link>
+            </li>
+            <li>
+              <button onClick={handleLogout} className="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded-md transition duration-200">
+                <FaSignOutAlt className="text-lg" /> {/* Logout Icon */}
+                <span><Link to="/login">Logout</Link></span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
 
       {/* Main Content */}

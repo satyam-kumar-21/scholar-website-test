@@ -2,8 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaPhoneAlt, FaWhatsapp } from 'react-icons/fa'; // Importing icons for call and WhatsApp
 import Testimonials from './Testimonials';
+import { useSelector } from 'react-redux';
 
 function ScholarProgram() {
+
+  const scholar = useSelector(state => state.auth.user.scholarFormId)
+  console.log(scholar);
+  
   const successStories = [
     {
       name: "Ravi Kumar",
@@ -33,23 +38,25 @@ function ScholarProgram() {
       <div className="">
 
 
-      <section className="py-20 px-4 md:px-16 bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 text-center text-white">
-  <h1 className="text-4xl sm:text-5xl font-extrabold mb-6">
-    Your Path to Success Starts Here
-  </h1>
-  <p className="mt-4 pb-10 text-lg sm:text-xl md:text-2xl max-w-4xl mx-auto">
-    Apply for the Scholar Program today and take the first step towards an incredible academic journey, complete with financial support and career opportunities.
-  </p>
-  <Link to="/apply-scholar-program" className="bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg text-lg font-semibold hover:bg-yellow-600 transition">
-    Apply Now
-  </Link>
-</section>
-
-
-
-
-
-
+        <section className="py-20 px-4 md:px-16 bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 text-center text-white">
+          <h1 className="text-4xl sm:text-5xl font-extrabold mb-6">
+            Your Path to Success Starts Here
+          </h1>
+          <p className="mt-4 pb-10 text-lg sm:text-xl md:text-2xl max-w-4xl mx-auto">
+            Apply for the Scholar Program today and take the first step towards an incredible academic journey, complete with financial support and career opportunities.
+          </p>
+           {/* Conditional rendering of Apply Now or Message based on scholar value */}
+           {scholar ? (
+            <p className="text-lg sm:text-xl text-gray-200 mb-6">
+              You have already filled out the form. Visit your <Link to="/dashboard" className="text-yellow-500">Dashboard</Link> to check your status.
+            </p>
+          ) : (
+            <Link to="/apply-scholar-program" className="bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg text-lg font-semibold hover:bg-yellow-600 transition">
+              Apply Now
+            </Link>
+          )}
+        
+        </section>
 
         {/* Who Can Apply Section */}
         <section className="bg-gray-100 py-12 sm:py-16 mb-12">
@@ -166,8 +173,8 @@ function ScholarProgram() {
           </div>
         </section>
 
-      
-      <Testimonials />
+
+        <Testimonials />
 
 
 
@@ -222,7 +229,7 @@ function ScholarProgram() {
         </section>
 
         {/* Final Call to Action */}
-       
+
       </div>
     </div>
   );

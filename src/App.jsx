@@ -17,6 +17,9 @@ import EditProfile from './components/studentDashboard/EditProfile';
 import PrivateRoute from './components/PrivateRoute'; // Import the PrivateRoute component
 import Footer from './components/footer/Footer';
 import Placement from './components/placement/Placement';
+import ThankYouPage from './components/scholar/ThankYouPage';
+import Home1 from './components/paytest/Home1';
+import PaymentsPage from './components/ScholarForm/PaymentsPage';
 
 const App = () => {
   return (
@@ -24,8 +27,12 @@ const App = () => {
       <Header />
       <ScrollToTop />
       <Routes>
+
+      <Route path="/test" element={<Home1 />} />
         {/* Route for Home page */}
         <Route path="/" element={<Home />} />
+
+        <Route path="/make-your-payment" element={<PaymentsPage />} />
 
         {/* Route for About page */}
         <Route path="/about" element={<About />} />
@@ -35,6 +42,7 @@ const App = () => {
 
         {/* Route for Scholar page */}
         <Route path="/scholar-info" element={<Scholar />} />
+        <Route path="/thank-you-for-applying" element={<ThankYouPage />} />
 
         <Route path="/placement" element={<Placement />} />
 

@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitScholarshipForm } from '../../redux/scholarActions'; // Assuming you have this in a separate file
+import { useNavigate } from 'react-router-dom';
+
 
 function ScholarForm() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isSubmitting, error } = useSelector(state => state.scholar); // Assuming you're storing loading state and errors in scholarSlice
+
+  const userId = useSelector(state => state.auth.user._id);
+  // const userId = 123
+  console.log("userID",userId)
   // State for form data
   const [formData, setFormData] = useState({
+    userId:userId,
     name: '',
     fatherName: '',
     email: '',
@@ -23,10 +35,12 @@ function ScholarForm() {
     pgPercentage: '',
     pgUniversity: '',
     pgCourse: '',
-    highestQualificationFile: null,
     selectedCourse: '',
     selectedBranch: '',  // Added branch field
   });
+
+
+  console.log(formData)
 
   // Available courses and their corresponding branches
   const courses = [
@@ -72,22 +86,38 @@ function ScholarForm() {
     });
   };
 
-  // Handle form submission
+  // // Handle form submission
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   dispatch(submitScholarshipForm(formData)); // Dispatch the action to submit the form
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Scholarship Application Submitted!');
-    console.log(formData);
-    // You would typically send the form data to an API here
+  
+    // Save the form data in localStorage or pass it via state
+    localStorage.setItem('formData', JSON.stringify(formData));
+  
+    // Redirect to payments page
+    navigate('/make-your-payment');
   };
+  
+
+
+  // if (success) {
+  //   navigate('/thank-you-for-applying');
+  // }
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-8">
       <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Apply for the Scholarship</h2>
 
+      {isSubmitting && <div className="text-center text-blue-500">Submitting...</div>}  {/* Show submitting indicator */}
+      {error && <div className="text-center text-red-500">{error}</div>}  {/* Show error if any */}
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Personal Information */}
         <div className="text-xl font-semibold text-gray-800">Personal Information</div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Full Name</label>
@@ -137,14 +167,13 @@ function ScholarForm() {
               value={formData.mobile}
               onChange={handleInputChange}
               className="w-full p-3 border border-gray-300 rounded-md"
-              required
+              
             />
           </div>
         </div>
 
         {/* Address Information */}
         <div className="text-xl font-semibold text-gray-800">Address Information</div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label htmlFor="village" className="block text-gray-700 font-medium mb-2">Village</label>
@@ -205,7 +234,7 @@ function ScholarForm() {
             value={formData.selectedCourse}
             onChange={handleCourseChange}
             className="w-full p-3 border border-gray-300 rounded-md"
-            required
+           
           >
             <option value="">Select Course</option>
             {courses.map((course, index) => (
@@ -226,7 +255,7 @@ function ScholarForm() {
               value={formData.selectedBranch}
               onChange={handleBranchChange}
               className="w-full p-3 border border-gray-300 rounded-md"
-              required
+              
             >
               <option value="">Select Branch</option>
               {courses
@@ -240,10 +269,10 @@ function ScholarForm() {
           </div>
         )}
 
-        {/* Academic Qualifications */}
+        {/* Qualification Sections */}
         <div className="text-xl font-semibold text-gray-800 mt-6">Academic Qualifications</div>
 
-        {/* 10th Details (Mandatory) */}
+        {/* 10th Details */}
         <div className="mt-4">
           <h4 className="text-lg font-semibold text-gray-700 mb-2">Matriculation (10th Class) <span className="text-red-500">*</span></h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -256,7 +285,7 @@ function ScholarForm() {
                 value={formData.tenthPercentage}
                 onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded-md"
-                required
+                
               />
             </div>
 
@@ -268,19 +297,18 @@ function ScholarForm() {
                 value={formData.tenthBoard}
                 onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded-md"
-                required
+               
               >
                 <option value="">Select Board</option>
                 <option value="CBSE">CBSE</option>
                 <option value="ICSE">ICSE</option>
                 <option value="State Board">State Board</option>
-                {/* Add more boards as required */}
               </select>
             </div>
           </div>
         </div>
 
-        {/* 12th Details (Optional) */}
+        {/* 12th Details */}
         <div className="mt-4">
           <h4 className="text-lg font-semibold text-gray-700 mb-2">Intermediate (12th Class)</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -293,6 +321,7 @@ function ScholarForm() {
                 value={formData.twelfthPercentage}
                 onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded-md"
+                
               />
             </div>
 
@@ -304,6 +333,7 @@ function ScholarForm() {
                 value={formData.twelfthBoard}
                 onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded-md"
+               
               >
                 <option value="">Select Board</option>
                 <option value="CBSE">CBSE</option>
@@ -313,7 +343,7 @@ function ScholarForm() {
             </div>
 
             <div>
-              <label htmlFor="twelfthStream" className="block text-gray-700 font-medium mb-2">12th Stream</label>
+              <label htmlFor="twelfthStream" className="block text-gray-700 font-medium mb-2">Stream</label>
               <select
                 id="twelfthStream"
                 name="twelfthStream"
@@ -327,20 +357,11 @@ function ScholarForm() {
                 <option value="Arts">Arts</option>
               </select>
             </div>
-
-            <div>
-              <label htmlFor="twelfthSubjects" className="block text-gray-700 font-medium mb-2">12th Subjects (comma separated)</label>
-              <input
-                type="text"
-                id="twelfthSubjects"
-                name="twelfthSubjects"
-                value={formData.twelfthSubjects}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md"
-              />
-            </div>
           </div>
         </div>
+
+        {/* Additional qualifications: UG, PG, etc. */}
+
 
         {/* UG Details (Mandatory) */}
         <div className="mt-6">
@@ -355,7 +376,7 @@ function ScholarForm() {
                 value={formData.ugPercentage}
                 onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded-md"
-                required
+                
               />
             </div>
 
@@ -368,7 +389,7 @@ function ScholarForm() {
                 value={formData.ugUniversity}
                 onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded-md"
-                required
+                
               />
             </div>
 
@@ -381,7 +402,7 @@ function ScholarForm() {
                 value={formData.ugCourse}
                 onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded-md"
-                required
+               
               />
             </div>
           </div>
@@ -429,25 +450,10 @@ function ScholarForm() {
           </div>
         </div>
 
-        {/* Upload Marksheets */}
-        <div className="mt-6">
-          <label htmlFor="highestQualificationFile" className="block text-gray-700 font-medium mb-2">
-            Upload Highest Qualification Marksheets (10th/12th/UG/PG)
-          </label>
-          <input
-            type="file"
-            id="highestQualificationFile"
-            name="highestQualificationFile"
-            onChange={handleFileChange}
-            className="w-full p-3 border border-gray-300 rounded-md"
-          />
-        </div>
-
-        {/* Submit Button */}
-        <div className="mt-6 text-center">
+        <div className="mt-4">
           <button
             type="submit"
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
+            className="w-full p-3 bg-blue-500 text-white font-medium rounded-md"
           >
             Submit Application
           </button>
