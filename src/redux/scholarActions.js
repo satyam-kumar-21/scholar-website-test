@@ -1,13 +1,18 @@
 import axios from 'axios';
 import { submitFormStart, submitFormSuccess, submitFormFailure } from './scholarSlice';
 
+// const BASE_URL = 'http://localhost:5000/api/auth'; // local
+
+const BASE_URL = 'https://scholarship-backend-orpin.vercel.app/api/scholar'; //production 
+// Register Action
+
 // Action to submit the scholarship form data
 export const submitScholarshipForm = (formData) => async (dispatch) => {
   dispatch(submitFormStart()); // Dispatch action to set loading state to true
   
   try {
     // Make the API request to submit the form data
-    const response = await axios.post('http://localhost:5000/api/scholar/submit-scholarship', formData);
+    const response = await axios.post(`${BASE_URL}/submit-scholarship`, formData);
     
     // Dispatch action to set loading to false and indicate success
     dispatch(submitFormSuccess());
@@ -30,7 +35,7 @@ export const fetchScholarshipByUserId = (userId) => async (dispatch) => {
   
   try {
     // Make the API request to get the scholarship data by userId
-    const response = await axios.get(`http://localhost:5000/api/scholar/scholarship/${userId}`);
+    const response = await axios.get(`${BASE_URL}/scholarship/${userId}`);
     
     // Here, you could dispatch an action for success (like storing the data in Redux if needed)
     console.log('Scholarship fetched successfully:', response.data);
@@ -52,7 +57,7 @@ export const fetchAllScholarships = () => async (dispatch) => {
   
   try {
     // Make the API request to get all scholarship applications (for admin or listing purposes)
-    const response = await axios.get('http://localhost:5000/api/scholar/all-scholarships');
+    const response = await axios.get(`${BASE_URL}/all-scholarships`);
     
     // Handle the response (such as storing the data in Redux)
     console.log('All scholarships fetched successfully:', response.data);

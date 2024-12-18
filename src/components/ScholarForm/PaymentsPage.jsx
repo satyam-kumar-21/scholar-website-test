@@ -8,6 +8,8 @@ import { submitScholarshipForm } from '../../redux/scholarActions';
 const PaymentsPage = () => {
   const dispatch = useDispatch();
 
+  const api = "https://scholarship-backend-orpin.vercel.app/api"
+
   // Load Razorpay script dynamically
   useEffect(() => {
     const script = document.createElement('script');
@@ -24,8 +26,8 @@ const PaymentsPage = () => {
 
   const chackoutHandler = async (amount) => {
     try {
-      const { data } = await axios.post("http://localhost:5000/api/order", { amount });
-      const { data: { keyId } } = await axios.get("http://localhost:5000/api/getkey");
+      const { data } = await axios.post(`${api}/order`, { amount });
+      const { data: { keyId } } = await axios.get(`${api}/order/getkey`);
 
       console.log("Razorpay Key ID: ", keyId);
       const options = {
@@ -36,7 +38,7 @@ const PaymentsPage = () => {
         description: "Scholarship Form Fee - JSR Group",
         image: logo,
         order_id: data.order.id, // Use the correct order ID from the backend
-        callback_url: "http://localhost:5000/api/paymentVerification", // Server callback URL
+        callback_url: `${api}/order/paymentVerification`, // Server callback URL
         prefill: {
           name: "Gaurav Kumar",
           email: "gaurav.kumar@example.com",
@@ -53,9 +55,7 @@ const PaymentsPage = () => {
           console.log("Payment Success:", response);
           handlePaymentVerification(response);  // Call the verification function after payment success
         },
-        theme: {
-          color: "#45D347",
-        },
+       
       };
 
       const razor = new window.Razorpay(options); // Make sure to use `window.Razorpay` here
@@ -69,7 +69,7 @@ const PaymentsPage = () => {
   const handlePaymentVerification = async (paymentDetails) => {
     try {
       // Verify the payment on your server with the payment details
-      const { data } = await axios.post("http://localhost:5000/api/paymentVerification", paymentDetails);
+      const { data } = await axios.post(`${api}/order/paymentVerification`, paymentDetails);
 
       if (data.success) {
         console.log("Payment successful. Submitting the form.");
